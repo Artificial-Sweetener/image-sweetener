@@ -2,7 +2,7 @@
 
 This is a simple program written in Python using Pillow for image manipulation and tkinter for GUI. ChatGPT was used heavily to put it together, using GPT4-o.
 
-There is a build for Windows availalbie in releases. You can run this on any platform that supports Python by cloning this repo. You'll need to make sure you have Pillow and tkinter.
+There is a build for Windows available in releases. You can run this on any platform that supports Python by cloning this repo. You'll need to make sure you have Pillow and tkinter.
 
 To use:
 1. Organize the images you want to watermark/scale into one folder
