@@ -41,6 +41,9 @@ To-Do
 
 *Combine 'social media scalers' into one script
 
+*Add preview for watermarks
+
+*Option to stash multiple watermarks for quick access
 
 If you're interested in what I'm doing or want to support me, consider checking out my website! :]
 https://artificialsweetener.ai
