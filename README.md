@@ -24,7 +24,7 @@ To use:
 Your outputs will be in folders nested within the directory your images were inside. The watermarked images will be in /watermarks/ for example. If you chose to watermark the images, then all the images in the other folder (/facebook/, /instagram/, etc) will be watermarked as well. If you didn't, they'll be the unwatermarked versions. The versions in the social media site folders are all the perfect resolution and format for you to post!
 
 
-Note: It's best to start with PNG files. Stable Diffusion outputs usually are PNGs to start with anyway.
+Note: It's best to start with PNG files. Use this program with uncompressed, unscaled art files if possible. The whole point is to save you time so you DON'T have to manually scale things.
 
 
 Known issues:
