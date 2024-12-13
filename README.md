@@ -11,3 +11,6 @@ Known issues:
 To-Do
 *Fix Instagram aspect ratio math
 *Combine 'social media scalers' into one script
+
+If you're interested in what I'm doing or want to support me, consider checking out my website! :]
+https://artificialsweetener.ai
