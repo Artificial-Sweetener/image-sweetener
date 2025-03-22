@@ -1,38 +1,52 @@
-from image_processing import resize_image, iterate_directory
+from image_processing import iterate_directory
 import os
-from shutil import copy2
 from PIL import Image
 
+def resize_image(input_path, output_webp_path, max_width=1080, max_height=1920):
+    """
+    Resize an image to fit within the TikTok recommended dimensions (1080x1920) 
+    while maintaining the aspect ratio. Saves as WebP.
+
+    Args:
+        input_path (str): Path to the input image.
+        output_webp_path (str): Path to save the resized WebP image.
+        max_width (int): Maximum width for the image.
+        max_height (int): Maximum height for the image.
+    """
+    with Image.open(input_path) as img:
+        width, height = img.size
+        scale_factor = min(max_width / width, max_height / height)
+
+        new_width = int(width * scale_factor)
+        new_height = int(height * scale_factor)
+
+        # Resize the image
+        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+        # Convert to RGB if necessary (WebP requires proper color mode)
+        if img.mode not in ("RGB", "RGBA"):
+            img = img.convert("RGB")
+
+        # Save as WebP with high quality
+        img.save(output_webp_path, format="WEBP", quality=100)
 
 def process_images_for_tiktok(input_dir, output_dir):
     """
-    Process images for TikTok's maximum dimensions (1080x1080).
-    
+    Process images for TikTok with proper scaling (max 1080x1920), ensuring WebP format.
+
     Args:
         input_dir (str): Path to the input directory containing images.
-        output_dir (str): Path to the output directory for scaled images.
+        output_dir (str): Path to the output directory for processed images.
     """
     print(f"Processing images for TikTok in '{input_dir}'...")
     print(f"Output will be saved to '{output_dir}'.")
 
-    max_dimension = 1080  # Maximum dimension for TikTok images
-
     def process_image(input_path, output_path):
-        # Check if the image is larger than max dimension
-        with Image.open(input_path) as img:
-            width, height = img.size
-            # Scale down if larger
-            if width > max_dimension or height > max_dimension:
-                resize_image(input_path, output_path, max_dimension)
-            else:
-                # If it's already small enough and it's a .png, convert to JPEG at high quality
-                if input_path.lower().endswith(".png"):
-                    img.convert("RGB").save(output_path, format="JPEG", quality=100)
-                else:
-                    # If it's a jpeg or already small enough, simply copy the image
-                    copy2(input_path, output_path)
+        # Ensure output file has .webp extension
+        output_webp_path = os.path.splitext(output_path)[0] + ".webp"
+        resize_image(input_path, output_webp_path, max_width=1080, max_height=1920)
 
-    # Ensure outputs are always JPEG and handle scaling/copying
+    # Force WebP output and override preserve_file_type behavior
     iterate_directory(input_dir, output_dir, process_image, preserve_file_type=False)
 
     print("TikTok scaling complete.")

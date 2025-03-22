@@ -9,7 +9,7 @@ from social_media_gui import create_social_media_section
 def resource_path(relative_path):
     """Get the path to the resource, whether it's bundled with the app or running in a development environment."""
     try:
-        # PyInstaller creates a temp folder and stores the path in _MEIPASS
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")  # Fallback to current directory
@@ -33,25 +33,15 @@ def create_gui():
 
     # Target Directory Selection
     tk.Label(root, text="Select Target Directory:").grid(row=0, column=0, padx=10, pady=10)
-
     target_dir_entry = tk.Entry(root, width=50)
     target_dir_entry.insert(0, config.get("target_dir", ""))
     target_dir_entry.grid(row=0, column=1, padx=10, pady=10)
 
-    # Ensure text focus stays at the end of long paths
-    target_dir_entry.xview_moveto(1)
-    target_dir_entry.icursor(tk.END)
-
     def browse_target_directory():
-        """Opens a file dialog to select a folder and updates the entry field."""
         directory = filedialog.askdirectory()
         if directory:
             target_dir_entry.delete(0, tk.END)
             target_dir_entry.insert(0, directory)
-
-            # Adjust text view to ensure the end of the path is visible
-            target_dir_entry.xview_moveto(1)
-            target_dir_entry.icursor(tk.END)
 
     tk.Button(root, text="Browse", command=browse_target_directory).grid(row=0, column=2, padx=10, pady=10)
 
@@ -65,13 +55,12 @@ def create_gui():
 
     # Process Button
     def start_processing():
-        """Start processing images based on user configuration."""
         target_dir = target_dir_entry.get()
         if not os.path.isdir(target_dir):
             messagebox.showerror("Error", "Please select a valid target directory.")
             return
 
-        # Extract values from widgets into options dictionary
+        # Extract the values from the widgets
         options = {
             "target_dir": target_dir,
             "watermark_path": watermark_options["watermark_path"].get(),
@@ -115,6 +104,7 @@ def create_gui():
     root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
     print("GUI closed.")
+
 
 if __name__ == "__main__":
     print("Launching GUI...")
